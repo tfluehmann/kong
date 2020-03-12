@@ -1269,7 +1269,7 @@ local luassert = require "luassert.assert"
 -- Will set a "response" value in the assertion state, so following
 -- assertions will operate on the value set.
 -- @name response
--- @param response results from `http_client:send` function (or any of the
+-- @param response_obj results from `http_client:send` function (or any of the
 -- shortcuts `client:get`, `client:post`, etc).
 -- @usage
 -- local res = client:get("/request", { .. request options here ..})
@@ -1295,11 +1295,11 @@ luassert:register("modifier", "response", modifier_response)
 -- Will set a "request" value in the assertion state, so following
 -- assertions will operate on the value set.
 --
--- The request must be inside a 'response' from the mock_upstream. If a request
--- is send to the mock_upstream endpoint `"/request"`, it will echo the request
+-- The request must be inside a 'response' from the `mock_upstream`. If a request
+-- is send to the `mock_upstream` endpoint `"/request"`, it will echo the request
 -- received in the body of the response.
 -- @name request
--- @param response results from `http_client:send` function (or any of the
+-- @param response_obj results from `http_client:send` function (or any of the
 -- shortcuts `client:get`, `client:post`, etc).
 -- @usage
 -- local res = client:post("/request", {
@@ -1636,6 +1636,18 @@ luassert:register("assertion", "queryparam", req_query_param,
 -- @name formparam
 -- @param name name of the form parameter to look up (case insensitive)
 -- @return value of the parameter
+-- @usage
+-- local r = assert(proxy_client:post("/request", {
+--   body    = {
+--     hello = "world",
+--   },
+--   headers = {
+--     host             = "mock_upstream",
+--     ["Content-Type"] = "application/x-www-form-urlencoded",
+--   },
+-- })
+-- local value = assert.request(r).has.formparam("hello")
+-- assert.are.equal("world", value)
 local function req_form_param(state, args)
   local param = args[1]
   local req = rawget(state, "kong_request")
