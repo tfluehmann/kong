@@ -911,7 +911,6 @@ end
 -- and then closes, echoing what was received (last read, in case
 -- of multiple requests).
 --
--- Check the `kill_tcp_server` function for return values.
 --
 -- Options:
 --
