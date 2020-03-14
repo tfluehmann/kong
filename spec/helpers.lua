@@ -249,7 +249,7 @@ end
 -- strategy in the test configuration.
 -- @param tables (optional) tables to truncate, this can be used to accelarate
 -- tests if only a few tables are used. By default all tables will be truncated.
--- @param plugins (optional) array of plugins to load
+-- @param plugins (optional) array of plugins to mark as loaded. Since kong will load all the bundled plugins by default, this is useful for mostly for marking custom plugins as loaded.
 -- @return BluePrint, DB
 -- @usage
 -- local PLUGIN_NAME = "my_fancy_plugin"
